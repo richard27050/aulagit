@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia dos Namorados, Agatha ❤️</title>
+    <style>
+        /* Reset e Fontes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #4a0000 0%, #8b0000 50%, #4a0000 100%);
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Efeito de Corações Flutuantes no Fundo */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -10vh;
+            color: rgba(255, 0, 50, 0.4);
+            font-size: 1.5rem;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) scale(1.5) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container Principal */
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        header h2 {
+            font-size: 1.5rem;
+            color: #ffb3b3;
+            font-weight: 300;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* Carta Romântica */
+        .letter-paper {
+            background-color: #fffaf0; /* Cor de papel envelhecido/creme */
+            color: #3e0c0c;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            line-height: 1.8;
+            font-size: 1.25rem;
+            text-align: left;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .letter-paper::before {
+            content: "💌";
+            font-size: 2.5rem;
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .letter-paper p {
+            margin-bottom: 20px;
+        }
+
+        .assinatura {
+            text-align: right;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 30px;
+            color: #8b0000;
+        }
+
+        /* Botão Interativo - Presente */
+        .gift-section {
+            margin-bottom: 50px;
+        }
+
+        .btn-gift {
+            background-color: #ff1a1a;
+            color: #fff;
+            border: 2px solid #ff4d4d;
+            padding: 20px 40px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 26, 26, 0.5);
+            transition: all 0.3s ease;
+            font-family: 'Trebuchet MS', sans-serif;
+            animation: pulse-gift 2s infinite;
+        }
+
+        @keyframes pulse-gift {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 26, 26, 0.8); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-gift:hover {
+            background-color: #cc0000;
+            transform: scale(1.1) !important;
+        }
+
+        /* Efeito de Tremor ao clicar */
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* Pop-up dos Cupons */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #fff;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            transform: scale(0.5);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 5px solid #ff1a1a;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-box h2 {
+            color: #8b0000;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        .coupons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .coupon {
+            background: #fff0f0;
+            border: 2px dashed #ff4d4d;
+            padding: 15px;
+            border-radius: 8px;
+            color: #8b0000;
+            font-weight: bold;
+            font-size: 1.1rem;
+            font-family: 'Trebuchet MS', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .close-btn {
+            background-color: #8b0000;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        .close-btn:hover {
+            background-color: #4a0000;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Gerador de Corações de Fundo -->
+    <div class="hearts-container" id="hearts-container"></div>
+
+    <div class="content">
+        <header>
+            <h1>Feliz Dia dos Namorados!</h1>
+            <h2>Para a mulher dos meus sonhos, Agatha. ❤️</h2>
+        </header>
+
+        <!-- Carta com o Texto Corrigido e Emocionante -->
+        <div class="letter-paper">
+            <p>Oi, meu amor!</p>
+            <p>Dia dos Namorados e, pelo terceiro ano seguido, estamos comemorando esse dia juntos. Todos os dias, desde que terminamos, eu orei (e até fiquei uma semana de jejum sem comer) para que Deus te trouxesse de volta para mim. Hoje, quando eu oro, é apenas para agradecer por Ele ter te colocado de volta na minha vida.</p>
+            <p>Você é a mulher dos meus sonhos e, a cada dia que passa, eu quero estar com você cada vez mais. Obrigado por mais uma vez me escolher e por me fazer feliz todos os dias como você faz.</p>
+            <p>Eu te amo desde o dia 17 de fevereiro de 2023... já são <strong>1.301 dias</strong> sendo o homem mais feliz do mundo por te amar e saber que você me ama também.</p>
+            
+            <div class="assinatura">
+                Feliz Dia dos Namorados!<br>
+                Com todo o amor do mundo, do seu amor. ❤️
+            </div>
+        </div>
+
+        <!-- Botão Interativo -->
+        <div class="gift-section">
+            <p style="margin-bottom: 15px; font-style: italic; font-size: 1.2rem;">Tenho uma última surpresinha para você hoje...</p>
+            <button class="btn-gift" id="btn-gift" onclick="abrirPresente()">🎁 Abrir meu Presente Virtual</button>
+        </div>
+    </div>
+
+    <!-- POP-UP DOS VALES-PRESENTE -->
+    <div class="modal-overlay" id="modal-presente">
+        <div class="modal-box">
+            <h2>🎟️ Seus Vales do Dia dos Namorados!</h2>
+            <p style="color: #333; margin-bottom: 20px; font-family: 'Trebuchet MS', sans-serif;">
+                Tire print desta tela. Você tem o direito de resgatar os prêmios abaixo a qualquer momento:
+            </p>
+            
+            <div class="coupons">
+                <div class="coupon">💆‍♀️ VALE MASSAGEM COMPLETA</div>
+                <div class="coupon">🍕 VALE COMIDA GOSTOSA (Eu pago)</div>
+                <div class="coupon">💋 VALE 1.301 BEIJOS SEGUIDOS</div>
+            </div>
+
+            <button class="close-btn" onclick="fecharPresente()">Amei! ❤️</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para criar corações flutuantes no fundo
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                
+                // Configurações aleatórias para tamanho, posição e velocidade
+                const leftPos = Math.random() * 100;
+                const size = (Math.random() * 1.5) + 0.5;
+                const duration = (Math.random() * 10) + 5;
+                const delay = Math.random() * 5;
+
+                heart.style.left = leftPos + 'vw';
+                heart.style.fontSize = size + 'rem';
+                heart.style.animationDuration = duration + 's';
+                heart.style.animationDelay = delay + 's';
+
+                container.appendChild(heart);
+            }
+        }
+
+        // Interação de abrir a caixa de presente
+        function abrirPresente() {
+            const btn = document.getElementById('btn-gift');
+            
+            // Adiciona a animação de "tremer"
+            btn.classList.add('shake');
+            btn.innerText = "Abrindo... 🎁";
+            
+            // Espera a animação acabar para abrir o pop-up
+            setTimeout(() => {
+                btn.classList.remove('shake');
+                btn.innerText = "🎁 Abrir meu Presente Virtual";
+                document.getElementById('modal-presente').classList.add('active');
+            }, 600);
+        }
+
+        function fecharPresente() {
+            document.getElementById('modal-presente').classList.remove('active');
+        }
+
+        // Inicia os corações quando a página carrega
+        window.onload = createHearts;
+    </script>
+
+</body>
+</html>
